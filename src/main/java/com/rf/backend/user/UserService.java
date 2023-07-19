@@ -10,7 +10,7 @@ public class UserService {
     UserRepository userRepository;
     PasswordEncoder passwordEncoder; // paswwordu görmemizi sağlar
 
-   // @Autowired // sadece 1 constructoe varsa auto vired kullanmak zorunda değiliz
+    @Autowired // sadece 1 constructoe varsa auto vired kullanmak zorunda değiliz
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder=new BCryptPasswordEncoder();
