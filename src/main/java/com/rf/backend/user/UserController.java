@@ -34,10 +34,23 @@ public class UserController {
         return new Mesagge(user.toString());
 
 
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)// bu hatada api erroru dönüştür
+    @ResponseStatus(HttpStatus.BAD_REQUEST)//400 hatsaını döndür
+    public ApiError degistirValidationException(MethodArgumentNotValidException exception){
+        ApiError apiError=new ApiError(400,"Validation Hatası","/api/users");
+        Map<String,String> validationErrors=new HashMap<>();
+        for (FieldError fieldError: exception.getBindingResult().getFieldErrors()) {
+            validationErrors.put(fieldError.getField(),fieldError.getDefaultMessage());
+            apiError.setValidationErrors(validationErrors);
+        }
+        return  apiError;
+    }
+}
 
 
-
-        /* String username=user.getUsername();
+ /* String username=user.getUsername();
         String display=user.getDisplay();
         String sifre=user.getSifre();
         String tekrar=user.getTekrar();
@@ -72,21 +85,7 @@ public class UserController {
             return  ResponseEntity.ok(new Mesagge(user.toString()) );
         }*/
 
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError degistirValidationException(MethodArgumentNotValidException exception){
-        ApiError apiError=new ApiError(400,"Validation Hatası","/api/users");
-        Map<String,String> validationErrors=new HashMap<>();
-        for (FieldError fieldError: exception.getBindingResult().getFieldErrors()) {
-            validationErrors.put(fieldError.getField(),fieldError.getDefaultMessage());
-            apiError.setValidationErrors(validationErrors);
-        }
-        return  apiError;
-    }
-
-    /*public ResponseEntity<?> hataYolla(User user,int index){
+/*public ResponseEntity<?> hataYolla(User user,int index){
 
         ApiError apiError=new ApiError(400,"Validation Hatası","/api/users");
         Map<String,String> validationErrors=new HashMap<>();
@@ -108,5 +107,3 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 
     }*/
-
-}

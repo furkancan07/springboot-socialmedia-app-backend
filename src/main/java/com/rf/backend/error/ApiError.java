@@ -1,10 +1,12 @@
 package com.rf.backend.error;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.Map;
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL) // eğer bunlardan biri nullsa döndürme
 public class ApiError {
     // hata kodu status
     private  int status;

@@ -18,12 +18,12 @@ public class User {
     @NotNull(message = "İkinci ad boş olamaz")
     @Size(min = 5,max = 20)
 private String display;
-@NotNull
 
+@NotNull
 @Size(min = 4)
 @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" ,message = "Lütfen en az bir büyük harf,bir küçüj harf ve sayi kullanin")// password için kural
-private String sifre;
 
+private String sifre;
 private String tekrar;
     @Id
     @GeneratedValue
