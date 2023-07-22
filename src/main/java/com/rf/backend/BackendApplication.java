@@ -1,8 +1,7 @@
 package com.rf.backend;
 
-import com.rf.backend.user.User;
-import com.rf.backend.user.UserRepository;
-import com.rf.backend.user.UserService;
+import com.rf.backend.entity.User;
+import com.rf.backend.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +24,7 @@ public class BackendApplication {
                 user.setUsername("kral1");
                 user.setDisplay("kral1");
                 user.setSifre("Ef123456789");
-                userService.save(user);
+                userService.kaydet(user);
             }
         };
     }

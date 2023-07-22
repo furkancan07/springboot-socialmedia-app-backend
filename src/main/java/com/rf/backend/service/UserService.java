@@ -1,5 +1,7 @@
-package com.rf.backend.user;
+package com.rf.backend.service;
 
+import com.rf.backend.entity.User;
+import com.rf.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,16 +16,23 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder=new BCryptPasswordEncoder();
-
     }
 
 
-    public void  save(User user){
+    public void kaydet(User user){
         user.setSifre(this.passwordEncoder.encode(user.getSifre()));
         userRepository.save(user);
     }
-    public void delete(User user){
+    public void sil(String username){
+        User user=userRepository.findByUsername(username);
         userRepository.delete(user);
+    }
+    public boolean kullaniciVarMi(String username){
+        return  userRepository.existsByUsername(username);
+    }
+    public User bulKullanici(String username){
+        User user=userRepository.findByUsername(username);
+        return  user;
     }
 
 }

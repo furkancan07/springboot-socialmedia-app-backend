@@ -1,16 +1,17 @@
-package com.rf.backend.user;
+package com.rf.backend.controller;
 
 import com.rf.backend.error.ApiError;
+import com.rf.backend.service.UserService;
+import com.rf.backend.user.Mesagge;
+import com.rf.backend.entity.User;
 import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
@@ -26,16 +27,12 @@ public class UserController {
     @CrossOrigin // forntend kısmı başka bir localde çalıştığı için bu onun önğne geçer
 
     @PostMapping("/users") // kaydetme işlemlerinde kullanılır
+
     public Mesagge createUser(@Valid /*BeAN VALİDİMİZ KULLANACAĞIMIZ SÖYLÜYORUZ*/ @RequestBody User user){// RequestBody adı üzerinde body gönderir
         // user sifre vs bos olursa nje yapacağımız
-
-        userService.save(user);
-
-        return new Mesagge(user.toString());
-
-
+            userService.kaydet(user);
+           return new Mesagge(user.toString());
     }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)// bu hatada api erroru dönüştür
     @ResponseStatus(HttpStatus.BAD_REQUEST)//400 hatsaını döndür
     public ApiError degistirValidationException(MethodArgumentNotValidException exception){
@@ -47,7 +44,9 @@ public class UserController {
         }
         return  apiError;
     }
+
 }
+
 
 
  /* String username=user.getUsername();
@@ -107,3 +106,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 
     }*/
+/*
+*   if(userService.kullaniciVarmi(user.getUsername())){
+            ApiError apiError=new ApiError(400,"Validation Hatası","/api/users");
+            Map<String,String> validationErrors=new HashMap<>();
+            validationErrors.put("username","bu kullanici adi kullanilmiş tekrar dene");
+            apiError.setValidationErrors(validationErrors);
+            return  new Mesagge(apiError.toString());
+        }
+*
+* */

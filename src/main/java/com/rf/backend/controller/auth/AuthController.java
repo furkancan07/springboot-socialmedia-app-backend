@@ -1,9 +1,10 @@
-package com.rf.backend.user.auth;
+package com.rf.backend.controller.auth;
 
+import com.rf.backend.entity.ChangePassword;
 import com.rf.backend.error.ApiError;
-import com.rf.backend.user.User;
-import com.rf.backend.user.UserController;
-import com.rf.backend.user.UserRepository;
+import com.rf.backend.entity.User;
+import com.rf.backend.service.UserService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +29,8 @@ public class AuthController {
 
 private PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
+
     @PostMapping("/auth")
     @CrossOrigin
      ResponseEntity<?> login(@RequestHeader(name = "Authorization",required = false) String authorization){
@@ -48,8 +51,8 @@ log.info(authorization);
           log.info(String.valueOf(sifre.length()));
           log.info(username);
           // kullanici var ise yapılacak işlemler
-          if(userRepository.existsByUsername(username)){
-              user=userRepository.findByUsername(username);
+          if(userService.kullaniciVarMi(username)){
+              user=userService.bulKullanici(username);
               log.info(user.toString());
               if(passwordEncoder.matches(sifre,user.getSifre())){
                   // bAŞARILI Giriş
@@ -70,17 +73,36 @@ log.info(authorization);
               apiError.setValidationErrors(validationErrors);
               return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
           }
-
-
-
-
-
-
-
-
-
-
-
-
     }
+    @PostMapping("/forgot")
+    @CrossOrigin
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ChangePassword changePassword) {
+        User user1;
+     if(userService.kullaniciVarMi(changePassword.getUsername())){
+         user1=userService.bulKullanici(changePassword.getUsername());
+         user1.setSifre(changePassword.getYeniSifre());
+         userService.kaydet(user1);
+         return ResponseEntity.ok("Şifre Değiştirildi");
+     }
+     else{
+         ApiError apiError = new ApiError(401, "Böyle Bir Kullanici Bulunmamakta", "/api/forgot");
+         Map<String,String > validationErrors=new HashMap<>();
+         validationErrors.put("username","Sistemde Kayitli değilsiniz Kaydolun");
+         apiError.setValidationErrors(validationErrors);
+         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
+     }
+
+    } @ExceptionHandler(MethodArgumentNotValidException.class)// bu hatada api erroru dönüştür
+    @ResponseStatus(HttpStatus.BAD_REQUEST)//400 hatsaını döndür
+    public ApiError degistirValidationException(MethodArgumentNotValidException exception){
+        ApiError apiError=new ApiError(400,"YeniSifre","/api/forgot");
+        Map<String,String> validationErrors=new HashMap<>();
+        for (FieldError fieldError: exception.getBindingResult().getFieldErrors()) {
+            validationErrors.put(fieldError.getField(),fieldError.getDefaultMessage());
+            apiError.setValidationErrors(validationErrors);
+        }
+        return  apiError;
+    }
+
+
 }
