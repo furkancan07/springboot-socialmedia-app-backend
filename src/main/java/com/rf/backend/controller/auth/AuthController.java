@@ -53,10 +53,10 @@ log.info(authorization);
           // kullanici var ise yapılacak işlemler
           if(userService.kullaniciVarMi(username)){
               user=userService.bulKullanici(username);
-              log.info(user.toString());
+            //  log.info(user.toString());
               if(passwordEncoder.matches(sifre,user.getSifre())){
                   // bAŞARILI Giriş
-                  return ResponseEntity.ok("Giriş başarılı");
+                  return ResponseEntity.ok(user.getUsername());
               }else{
                   // yanlış şifre
                   ApiError apiError=new ApiError(401,"Yanliş Şifre","/api/auth");

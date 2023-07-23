@@ -58,7 +58,8 @@ public class ShareController {
         public ResponseEntity<?> deleteShare(@PathVariable Long id){
         if(shareService.existingShare(id)){
             shareService.sil(id);
-return ResponseEntity.ok("Paylaşım Başari ile silindi");
+return ResponseEntity.ok("Paylaşım Başari ile " +
+        "silindi");
 
         }else{
             System.out.println("Böyle bir kullanici yok ");

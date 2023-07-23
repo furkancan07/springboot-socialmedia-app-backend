@@ -8,21 +8,22 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Entity
-@Table
 @Data
-public class Share {
+@Table
+@Entity
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull(message = "Boş olamaz")
-    @Size(min = 2,max = 18)
-    private String title;
-    private String image;
     @NotNull
-    @Size(min = 4)
-    private String description;
+    @Size(max = 255)
+    private String content;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Share share;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
+  // private List<Comment> comments;
 }

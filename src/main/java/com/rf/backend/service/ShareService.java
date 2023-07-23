@@ -1,5 +1,6 @@
 package com.rf.backend.service;
 
+import com.rf.backend.entity.Comment;
 import com.rf.backend.entity.Share;
 import com.rf.backend.repository.ShareRepository;
 import jakarta.persistence.Id;
@@ -15,6 +16,7 @@ public class ShareService{
     ShareRepository shareRepository;
     List<Share> shares=new ArrayList<>();
 
+
     public List<Share> getAllShares(){
         return  shares;
     }
@@ -28,6 +30,9 @@ public class ShareService{
     }
     public boolean existingShare(Long id){
     return  shareRepository.existsById(id);
+    }
+    public Share findById(Long id){
+        return shareRepository.findById(id).orElse(null);
     }
     public void  sil(Long id){
 
