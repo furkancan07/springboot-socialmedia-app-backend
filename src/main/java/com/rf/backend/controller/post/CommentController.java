@@ -1,16 +1,17 @@
-package com.rf.backend.controller;
+package com.rf.backend.controller.post;
 
-import com.rf.backend.entity.Comment;
-import com.rf.backend.entity.Share;
-import com.rf.backend.entity.User;
+import com.rf.backend.entity.post.Comment;
+import com.rf.backend.entity.post.Share;
+import com.rf.backend.entity.user.User;
 import com.rf.backend.error.ApiError;
-import com.rf.backend.service.CommentService;
-import com.rf.backend.service.ShareService;
-import com.rf.backend.service.UserService;
+import com.rf.backend.service.post.CommentService;
+import com.rf.backend.service.post.ShareService;
+import com.rf.backend.service.user.UserService;
 import com.rf.backend.user.Mesagge;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,8 @@ public class CommentController {
     @Autowired
     UserService userService;
     @PostMapping("/addComment/{username}/{postId}")
-    public Mesagge addComment(@PathVariable("username") String username,@PathVariable("postId") Long postId, @Valid @RequestBody Comment comment){
+    @CrossOrigin
+    public ResponseEntity<?> addComment(@PathVariable("username") String username, @PathVariable("postId") Long postId, @Valid @RequestBody Comment comment){
         Share share=null;
         User user=null;
         if(shareService.existingShare(postId) && userService.kullaniciVarMi(username)){
@@ -37,9 +39,10 @@ public class CommentController {
            user=userService.bulKullanici(username);
            comment.setUser(user);
            commentService.kaydet(comment);
-           return new Mesagge("eklendi");
+           return ResponseEntity.ok("yorum eklendi");
        }else{
-            return  null;
+            ApiError apiError=new ApiError(404,"kullanici veya paylaşım bulunamadi","api/addComment");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
         }
 
     }

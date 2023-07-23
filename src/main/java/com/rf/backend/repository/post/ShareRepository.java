@@ -1,9 +1,8 @@
-package com.rf.backend.repository;
-import com.rf.backend.entity.Share;
+package com.rf.backend.repository.post;
+import com.rf.backend.entity.post.Share;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 @Repository
 public interface ShareRepository extends JpaRepository<Share,Long>{
 

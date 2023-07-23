@@ -1,7 +1,7 @@
 package com.rf.backend;
 
-import com.rf.backend.entity.User;
-import com.rf.backend.service.UserService;
+import com.rf.backend.entity.user.User;
+import com.rf.backend.service.user.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

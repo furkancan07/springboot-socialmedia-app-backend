@@ -1,6 +1,6 @@
-package com.rf.backend.repository;
+package com.rf.backend.repository.post;
 
-import com.rf.backend.entity.Comment;
+import com.rf.backend.entity.post.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

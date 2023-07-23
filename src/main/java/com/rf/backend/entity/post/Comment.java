@@ -1,12 +1,11 @@
-package com.rf.backend.entity;
+package com.rf.backend.entity.post;
 
+import com.rf.backend.entity.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Table
@@ -25,5 +24,4 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-  // private List<Comment> comments;
 }

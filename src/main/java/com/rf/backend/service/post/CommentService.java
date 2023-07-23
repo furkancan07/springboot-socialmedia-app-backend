@@ -1,10 +1,7 @@
-package com.rf.backend.service;
+package com.rf.backend.service.post;
 
-import com.rf.backend.entity.Comment;
-import com.rf.backend.entity.Share;
-import com.rf.backend.repository.CommentRepository;
-import com.rf.backend.repository.ShareRepository;
-import com.rf.backend.repository.UserRepository;
+import com.rf.backend.entity.post.Comment;
+import com.rf.backend.repository.post.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

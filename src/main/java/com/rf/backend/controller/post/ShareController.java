@@ -1,8 +1,12 @@
-package com.rf.backend.controller;
+package com.rf.backend.controller.post;
 
-import com.rf.backend.entity.Share;
+import com.rf.backend.entity.post.Like;
+import com.rf.backend.entity.post.Share;
+import com.rf.backend.entity.user.User;
 import com.rf.backend.error.ApiError;
-import com.rf.backend.service.ShareService;
+import com.rf.backend.service.post.LikeService;
+import com.rf.backend.service.post.ShareService;
+import com.rf.backend.service.user.UserService;
 import com.rf.backend.user.Mesagge;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +24,44 @@ public class ShareController {
 
     @Autowired
     ShareService shareService;
-    @PostMapping("/createShare")
-    public Mesagge createNewShare(@Valid @RequestBody Share share){
-        shareService.Kaydet(share);
-        shareService.getAllShares().add(share);
+    @Autowired
+    UserService userService;
+    @Autowired
+    LikeService likeService;
+    @PostMapping("/createShare/{username}")
+    @CrossOrigin
+    public ResponseEntity<?> createNewShare(@PathVariable(name = "username")String username , @Valid @RequestBody Share share, Like like){
+        User user=null;
+        if(userService.kullaniciVarMi(username)){
+           user=userService.bulKullanici(username);
+           share.setUser(user);
+           shareService.Kaydet(share);
+            like.setShare(share);
+           likeService.save(like);
 
-        return new Mesagge(share.toString());
+           shareService.getAllShares().add(share);
+           return ResponseEntity.ok(user.getUsername()+" ' e ait paylaşım eklendi");
+       }
+       else{
+           ApiError apiError=new ApiError(404,"kullanici bulunamadi","api/createShare");
+            Map<String,String> validationErrors=new HashMap<>();
+            validationErrors.put("username","Kullanici bulunamadi");
+            apiError.setValidationErrors(validationErrors);
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+        }
+
+
+
     }
     @GetMapping("/getShares")
+    @CrossOrigin
     public List<Share> getShares(){
 
 
         return shareService.getAllShares();
     }
     @PutMapping("/updatedShare/{id}") // istek dönerken /updatedShared/2 diye yazılacak
+    @CrossOrigin
     public Mesagge updateShare(@PathVariable Long id, @Valid @RequestBody Share updateShare){
         Share existingShare=null;
         for (Share share:shareService.getAllShares()) {

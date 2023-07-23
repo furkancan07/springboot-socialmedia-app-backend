@@ -1,4 +1,4 @@
-package com.rf.backend.entity;
+package com.rf.backend.entity.user;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

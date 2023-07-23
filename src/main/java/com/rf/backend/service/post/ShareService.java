@@ -1,15 +1,12 @@
-package com.rf.backend.service;
+package com.rf.backend.service.post;
 
-import com.rf.backend.entity.Comment;
-import com.rf.backend.entity.Share;
-import com.rf.backend.repository.ShareRepository;
-import jakarta.persistence.Id;
+import com.rf.backend.entity.post.Share;
+import com.rf.backend.repository.post.ShareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ShareService{

@@ -1,7 +1,9 @@
-package com.rf.backend.entity;
+package com.rf.backend.entity.post;
 
+import com.rf.backend.entity.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -23,6 +25,8 @@ public class Share {
     @NotNull
     @Size(min = 4)
     private String description;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
 }
