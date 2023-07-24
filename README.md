@@ -105,7 +105,7 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 ```http
   GET /api/getShares
 ```
-
+[frontend](https://github.com/furkancan2107/socialmedia-app-frontend) kısmı burada.
 
 
 
