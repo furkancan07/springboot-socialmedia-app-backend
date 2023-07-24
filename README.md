@@ -100,11 +100,16 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 
 
 
+
 #### Tüm postları getirir
 
 ```http
   GET /api/getShares
 ```
+#### Apilerin kullanımına örnek
+
+[service](https://github.com/furkancan2107/socialmedia-app-frontend/blob/main/src/api/server.jsx) kısmı burada.
+
 [frontend](https://github.com/furkancan2107/socialmedia-app-frontend) kısmı burada.
 
 
