@@ -4,6 +4,7 @@ import com.rf.backend.error.ApiError;
 import com.rf.backend.service.user.UserService;
 import com.rf.backend.user.Mesagge;
 import com.rf.backend.entity.user.User;
+import jakarta.validation.GroupSequence;
 import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,10 @@ public class UserController {
     public Mesagge createUser(@Valid /*BeAN VALİDİMİZ KULLANACAĞIMIZ SÖYLÜYORUZ*/ @RequestBody User user){// RequestBody adı üzerinde body gönderir
         // user sifre vs bos olursa nje yapacağımız
             userService.kaydet(user);
-           return new Mesagge(user.toString());
+           return new Mesagge("isim: "+ user.getUsername()+" id: " + user.getId());
+    }
+    public String getUsername(@RequestBody User user){
+        return  user.getUsername();
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)// bu hatada api erroru dönüştür
     @ResponseStatus(HttpStatus.BAD_REQUEST)//400 hatsaını döndür

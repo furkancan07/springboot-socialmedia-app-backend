@@ -28,8 +28,10 @@ public class ShareController {
     UserService userService;
     @Autowired
     LikeService likeService;
-    @PostMapping("/createShare/{username}")
+
+    // yeni post oluşturma
     @CrossOrigin
+    @PostMapping("/createShare/{username}")
     public ResponseEntity<?> createNewShare(@PathVariable(name = "username")String username , @Valid @RequestBody Share share, Like like){
         User user=null;
         if(userService.kullaniciVarMi(username)){
@@ -53,6 +55,7 @@ public class ShareController {
 
 
     }
+    // tüm postları getirme
     @GetMapping("/getShares")
     @CrossOrigin
     public List<Share> getShares(){
@@ -60,6 +63,7 @@ public class ShareController {
 
         return shareService.getAllShares();
     }
+    // paylaşımı güncelleme
     @PutMapping("/updatedShare/{id}") // istek dönerken /updatedShared/2 diye yazılacak
     @CrossOrigin
     public Mesagge updateShare(@PathVariable Long id, @Valid @RequestBody Share updateShare){
@@ -81,8 +85,23 @@ public class ShareController {
             return new Mesagge("Kimlik numarasına sahip paylaşım bulunamadı: " + id);
         }
         }
+        // kullaniciya ait paylaşımı getirme
+        @CrossOrigin
+        @GetMapping("/getUserPost/{username}")
+        public List<Share> getUserPost(@PathVariable String username){
+        List<Share> newShareList=new ArrayList<>();
+               for (Share share : shareService.getAllShares()){
+                    if(share.getUser().getUsername().equals(username)){
+                        newShareList.add(share);
+                    }
+               }
+               return newShareList;
 
+        }
+
+       // paylaşımı sil
         @DeleteMapping("/deleteShare/{id}")
+        @CrossOrigin
         public ResponseEntity<?> deleteShare(@PathVariable Long id){
         if(shareService.existingShare(id)){
             shareService.sil(id);
@@ -97,6 +116,7 @@ return ResponseEntity.ok("Paylaşım Başari ile " +
 
         }
 
+   // hata döndürme
     @ExceptionHandler(MethodArgumentNotValidException.class)// bu hatada api erroru dönüştür
     @ResponseStatus(HttpStatus.BAD_REQUEST)//400 hatsaını döndür
     public ApiError degistirValidationException(MethodArgumentNotValidException exception){

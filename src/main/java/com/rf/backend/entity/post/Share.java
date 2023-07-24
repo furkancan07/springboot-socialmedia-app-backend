@@ -19,7 +19,7 @@ public class Share {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "Boş olamaz")
-    @Size(min = 2,max = 18)
+    @Size(min = 2,max = 250)
     private String title;
     private String image;
     @NotNull
