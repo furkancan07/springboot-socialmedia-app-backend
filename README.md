@@ -109,6 +109,7 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 #### Apilerin kullanımına örnek
 
 [service](https://github.com/furkancan2107/socialmedia-app-frontend/blob/main/src/api/server.jsx) kısmı burada.
+#### Frontend Kodları
 
 [frontend](https://github.com/furkancan2107/socialmedia-app-frontend) kısmı burada.
 
