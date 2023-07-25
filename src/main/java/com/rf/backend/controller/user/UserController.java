@@ -1,10 +1,8 @@
 package com.rf.backend.controller.user;
-
 import com.rf.backend.error.ApiError;
 import com.rf.backend.service.user.UserService;
-import com.rf.backend.user.Mesagge;
+import com.rf.backend.dto.Mesagge;
 import com.rf.backend.entity.user.User;
-import jakarta.validation.GroupSequence;
 import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +16,26 @@ import org.slf4j.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController // çalışmasını sağlar
-@RequestMapping("/api") // bu sınıfın alt tarafı şu şekilde çalışır localhost:8080/api
+@RestController
+@RequestMapping("/api")
 public class UserController {
     private  static  final  Logger log= LoggerFactory.getLogger(UserController.class);
 
-    @Autowired // Bir constructorumuz var diyelim uzun uzun new ClassAdi(paramatre) yazmamıza gereke kalmıyor
+    @Autowired
     UserService userService;
-    @CrossOrigin // forntend kısmı başka bir localde çalıştığı için bu onun önğne geçer
+    @CrossOrigin
 
     @PostMapping("/users") // kaydetme işlemlerinde kullanılır
 
-    public Mesagge createUser(@Valid /*BeAN VALİDİMİZ KULLANACAĞIMIZ SÖYLÜYORUZ*/ @RequestBody User user){// RequestBody adı üzerinde body gönderir
-        // user sifre vs bos olursa nje yapacağımız
+    public Mesagge createUser(@Valid @RequestBody User user){
             userService.kaydet(user);
            return new Mesagge("isim: "+ user.getUsername()+" id: " + user.getId());
     }
     public String getUsername(@RequestBody User user){
         return  user.getUsername();
     }
-    @ExceptionHandler(MethodArgumentNotValidException.class)// bu hatada api erroru dönüştür
-    @ResponseStatus(HttpStatus.BAD_REQUEST)//400 hatsaını döndür
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError degistirValidationException(MethodArgumentNotValidException exception){
         ApiError apiError=new ApiError(400,"Validation Hatası","/api/users");
         Map<String,String> validationErrors=new HashMap<>();

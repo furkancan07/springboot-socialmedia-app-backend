@@ -1,5 +1,7 @@
 package com.rf.backend.entity.post;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.rf.backend.Views.Views;
 import com.rf.backend.entity.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -19,9 +21,11 @@ public class Comment {
     private String content;
     @ManyToOne
     @JoinColumn(name = "post_id")
+
     private Share share;
     @ManyToOne
     @JoinColumn(name = "user_id")
+
     private User user;
 
 }

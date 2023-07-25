@@ -1,14 +1,9 @@
 package com.rf.backend.controller.post;
-
 import com.rf.backend.entity.post.Like;
 import com.rf.backend.entity.post.Share;
-import com.rf.backend.entity.user.User;
-import com.rf.backend.error.ApiError;
-import com.rf.backend.service.post.CommentService;
 import com.rf.backend.service.post.LikeService;
 import com.rf.backend.service.post.ShareService;
 import com.rf.backend.service.user.UserService;
-import com.rf.backend.user.Mesagge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -22,7 +22,7 @@ public class ShareService{
         this.shareRepository = shareRepository;
     }
 
-    public void Kaydet(Share share){
+    public void kaydet(Share share){
     shareRepository.save(share);
     }
     public boolean existingShare(Long id){
