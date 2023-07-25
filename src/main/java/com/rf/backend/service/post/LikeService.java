@@ -18,8 +18,12 @@ public class LikeService {
     public Like findByShare(Share share){
     return likeRepository.findByShare(share);
     }
+    public Like findById(Long id){return  likeRepository.findById(id).orElse(null);}
     public void save(Like like){
 
     likeRepository.save(like);
+    }
+    public void delete(Like like){
+    likeRepository.delete(like);
     }
 }

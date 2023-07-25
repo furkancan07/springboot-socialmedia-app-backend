@@ -28,6 +28,7 @@ public class LikeController {
     // ...
 
     @PutMapping("/plusLikeCount/{postId}")
+    @CrossOrigin
     public ResponseEntity<?> plusLikeCount(@PathVariable(name = "postId") Long postId) {
       Like uLike=null;
       Share exShare=null;
@@ -46,6 +47,33 @@ public class LikeController {
           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paylaşım bulunamadi");
       }
 
+    }
+    @CrossOrigin
+    @PutMapping("/minusLikeCount/{postId}")
+    public ResponseEntity<?> minusLikeCount(@PathVariable Long postId){
+        Like like=null;
+        Share share=null;
+        for(Share post : shareService.getAllShares()){
+            if(post.getId().equals(postId)){
+                share=post;
+                break;
+            }
+        }
+        if(share!=null){
+            like=likeService.findByShare(share);
+            like.setCount(like.getCount()-1);
+            likeService.save(like);
+            return ResponseEntity.ok(share.getId()+" numaralı paylaşımın beğeni sayisi : " + like.getCount());
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paylaşım bulunamadi");
+        }
+    }
+    @CrossOrigin
+    @GetMapping("/getLikeCount/{id}")
+    public int getLikeCount(@PathVariable Long id){
+      Like like=likeService.findById(id);
+        return  like.getCount();
     }
 
     // ...

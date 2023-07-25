@@ -103,8 +103,14 @@ public class ShareController {
         @DeleteMapping("/deleteShare/{id}")
         @CrossOrigin
         public ResponseEntity<?> deleteShare(@PathVariable Long id){
+        Like like=null;
+        Share share=null;
         if(shareService.existingShare(id)){
-            shareService.sil(id);
+           share=shareService.findById(id);
+           like=likeService.findByShare(share);
+           likeService.delete(like);
+           shareService.sil(id);
+
 return ResponseEntity.ok("Paylaşım Başari ile " +
         "silindi");
 
