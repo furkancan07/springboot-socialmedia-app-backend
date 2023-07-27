@@ -9,13 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DComment {
-
     private Long id;
-
-
     private String content;
-
-
     private DUser user;
-
 }
