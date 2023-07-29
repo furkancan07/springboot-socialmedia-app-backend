@@ -8,15 +8,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
     UserRepository userRepository;
     PasswordEncoder passwordEncoder; // paswwordu görmememizi sağlar
+    List<User> users=new ArrayList<>();
 
     @Autowired // sadece 1 constructoe varsa auto vired kullanmak zorunda değiliz
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder=new BCryptPasswordEncoder();
+    }
+    public List<User> getAllUsers(){
+        return  users;
+
     }
 
 

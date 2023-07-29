@@ -6,7 +6,7 @@ import com.rf.backend.error.ApiError;
 import com.rf.backend.service.post.LikeService;
 import com.rf.backend.service.post.ShareService;
 import com.rf.backend.service.user.UserService;
-import com.rf.backend.dto.Mesagge;
+import com.rf.backend.dto.StatusOkMessagge;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,8 +59,7 @@ public class ShareController {
     @GetMapping("/getShares")
     @CrossOrigin
     public List<Share> getShares(){
-
-
+        
         return shareService.getAllShares();
     }
 
@@ -68,7 +67,7 @@ public class ShareController {
     // paylaşımı güncelleme
     @PutMapping("/updatedShare/{id}") // istek dönerken /updatedShared/2 diye yazılacak
     @CrossOrigin
-    public Mesagge updateShare(@PathVariable Long id, @Valid @RequestBody Share updateShare){
+    public StatusOkMessagge updateShare(@PathVariable Long id, @Valid @RequestBody Share updateShare){
         Share existingShare=null;
         for (Share share:shareService.getAllShares()) {
           if(share.getId().equals(id)){
@@ -82,9 +81,9 @@ public class ShareController {
             // description güncelleme
             existingShare.setDescription(updateShare.getDescription());
             shareService.kaydet(existingShare);
-            return new Mesagge("Paylaşım güncellendi: " + existingShare.toString());
+            return new StatusOkMessagge("Paylaşım güncellendi: " + existingShare.toString());
         }else{
-            return new Mesagge("Kimlik numarasına sahip paylaşım bulunamadı: " + id);
+            return new StatusOkMessagge("Kimlik numarasına sahip paylaşım bulunamadı: " + id);
         }
         }
 

@@ -7,6 +7,6 @@ import lombok.*;
 //@Setter setterleri get
 /*@NoArgsConstructor */ // constructouer yok eder
 @AllArgsConstructor // OTAMATİK CONSTRUCTOR OLUŞTURUR
-public class Mesagge {
+public class StatusOkMessagge {
     private  String  mesaj;
 }

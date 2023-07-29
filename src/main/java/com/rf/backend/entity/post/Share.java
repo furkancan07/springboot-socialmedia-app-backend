@@ -26,7 +26,7 @@ public class Share {
     @Size(min = 2,max = 250)
 
     private String title;
-
+    @Lob
     private String image;
     @NotNull
     @Size(min = 4)

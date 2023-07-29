@@ -72,6 +72,18 @@ public class CommentController {
 
         return newList;
     }
+    // kaç tane yorum geldiğini göstere servis
+    @GetMapping("/getCommentCount/{postId}")
+    @CrossOrigin
+    public int getCommentCount(@PathVariable Long postId){
+        int sayi=0;
+        for(Comment comment : commentService.getAllComment()){
+            if(comment.getShare().getId().equals(postId)){
+                sayi++;
+            }
+        }
+        return  sayi;
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError validationException(MethodArgumentNotValidException exception){

@@ -1,7 +1,8 @@
 package com.rf.backend.controller.user;
+import com.rf.backend.dto.DUser;
 import com.rf.backend.error.ApiError;
 import com.rf.backend.service.user.UserService;
-import com.rf.backend.dto.Mesagge;
+import com.rf.backend.dto.StatusOkMessagge;
 import com.rf.backend.entity.user.User;
 import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,9 +30,24 @@ public class UserController {
 
     @PostMapping("/users") // kaydetme işlemlerinde kullanılır
 
-    public Mesagge createUser(@Valid @RequestBody User user){
+    public StatusOkMessagge createUser(@Valid @RequestBody User user){
+        userService.getAllUsers().add(user);
             userService.kaydet(user);
-           return new Mesagge("isim: "+ user.getUsername()+" id: " + user.getId());
+
+           return new StatusOkMessagge("isim: "+ user.getUsername()+" id: " + user.getId());
+    }
+    @GetMapping("/getAllUsers")
+    @CrossOrigin
+    public List<DUser> getUsers(){
+        List<DUser> dUsers=new ArrayList<>();
+        for(User user : userService.getAllUsers()){
+            DUser dUser=new DUser();
+            dUser.setId((long)user.getId());
+            dUser.setUsername(user.getUsername());
+            dUsers.add(dUser);
+        }
+
+        return dUsers;
     }
     public String getUsername(@RequestBody User user){
         return  user.getUsername();

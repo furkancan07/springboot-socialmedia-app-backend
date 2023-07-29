@@ -28,6 +28,7 @@ public class BackendApplication {
                 user.setDisplay("kral1");
                 user.setSifre("Ef123456789");
                 userService.kaydet(user);
+                userService.getAllUsers().add(user);
 
 
             }

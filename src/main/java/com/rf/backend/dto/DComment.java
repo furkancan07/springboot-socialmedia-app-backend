@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DComment {
+public class  DComment {
     private Long id;
     private String content;
     private DUser user;
