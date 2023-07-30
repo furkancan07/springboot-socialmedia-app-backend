@@ -19,4 +19,7 @@ public class MessageService {
     public List<Message> getAllMessages(){
         return  messages;
     }
+    public void save(Message message){
+        messageRepository.save(message);
+    }
 }

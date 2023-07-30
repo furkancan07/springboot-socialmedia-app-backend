@@ -46,7 +46,6 @@ public class UserController {
             dUser.setUsername(user.getUsername());
             dUsers.add(dUser);
         }
-
         return dUsers;
     }
     public String getUsername(@RequestBody User user){

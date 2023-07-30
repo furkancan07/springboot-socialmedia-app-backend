@@ -2,7 +2,11 @@ package com.rf.backend.entity.message;
 
 import com.rf.backend.entity.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -12,6 +16,8 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @NotEmpty
     private String content;
 
     @ManyToOne
@@ -20,5 +26,6 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private User receiver;
+    private Date date=new Date();
 
 }

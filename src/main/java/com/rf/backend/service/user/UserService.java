@@ -37,6 +37,9 @@ public class UserService {
         User user=userRepository.findByUsername(username);
         userRepository.delete(user);
     }
+    public User findByUserName(String username){
+        return userRepository.findByUsername(username);
+    }
     public boolean kullaniciVarMi(String username){
         return  userRepository.existsByUsername(username);
     }
