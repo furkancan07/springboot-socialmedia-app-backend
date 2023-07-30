@@ -130,17 +130,17 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 ```http
   GET /api/get shares
 ```
-#### mesaj atma
+#### 2 kişi arasındaki mesajları getirme
 
 ```http
-  Post /api/addMessage/${sender}/${receiver}
+  Post /api/getMessages/${sender}/${receiver}
 ```
 | Parametre | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
 | `sender` | `String` | **Gerekli**. API anahtarınız. |
 | `receiver` | `String` | **Gerekli**. API anahtarınız. |
 
-#### 2 kişi arasındaki mesajları getirme
+#### mesaj atma 
 
 ```http
   Post /api/addMessage/${sender}/${receiver}
