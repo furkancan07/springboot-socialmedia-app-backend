@@ -31,6 +31,11 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 | Parametre | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
 | `body` | `Map` | **Gerekli**. API anahtarınız. |
+#### Tüm Kullanıcıları getirme
+
+```http
+  Get /api/getAllUsers
+```
 
 #### Paylaşım ekleme
 
@@ -40,6 +45,9 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 | Parametre | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
 | `username` | `String` | **Gerekli**. API anahtarınız. |
+
+
+
 
 #### Paylaşım Güncelleme
 
@@ -77,6 +85,14 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 | :-------- | :------- | :------------------------- |
 | `username` | `String` | **Gerekli**. API anahtarınız. |
 | `id` | `Long` | **Gerekli**. API anahtarınız. |
+#### Herhangi bir paylaşıma gelen Yorumlar
+
+```http
+  Get /api/getComments/${id}
+```
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `id` | `Long` | **Gerekli**. API anahtarınız. |
 
 
 #### Herhangi bir paylaşıma gelen like sayısı
@@ -96,6 +112,14 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 | Parametre | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
 | `id` | `Long` | **Gerekli**. API anahtarınız. |
+#### Herhangi bir paylaşıma like geri alma
+
+```http
+  Put /api/minusLikeCount/${id}
+```
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `id` | `Long` | **Gerekli**. API anahtarınız. |
 
 
 
@@ -104,8 +128,29 @@ Uzun zamandır aklımda olan bir projeyi okulların bitmesiyle yapmaya karar ver
 #### Tüm postları getirir
 
 ```http
-  GET /api/getShares
+  GET /api/get shares
 ```
+#### 2 kişi arasındaki mesajları getirme
+
+```http
+  Post /api/getMessages/${sender}/${receiver}
+```
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `sender` | `String` | **Gerekli**. API anahtarınız. |
+| `receiver` | `String` | **Gerekli**. API anahtarınız. |
+
+#### mesaj atma 
+
+```http
+  Post /api/addMessage/${sender}/${receiver}
+```
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `sender` | `String` | **Gerekli**. API anahtarınız. |
+| `receiver` | `String` | **Gerekli**. API anahtarınız. |
+| `body` | `Map` | **Gerekli**. API anahtarınız. |
+
 #### Apilerin kullanımına örnek
 
 [service](https://github.com/furkancan2107/socialmedia-app-frontend/blob/main/src/api/server.jsx) kısmı burada.
