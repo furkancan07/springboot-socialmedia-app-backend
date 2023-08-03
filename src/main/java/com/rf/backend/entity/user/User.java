@@ -32,6 +32,9 @@ public class User {
     private String sifre;
     private String tekrar;
 
+    @Lob
+    private String image;
+
     @Id
     @GeneratedValue
 

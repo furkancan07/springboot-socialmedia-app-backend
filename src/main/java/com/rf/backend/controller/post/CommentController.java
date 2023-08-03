@@ -64,6 +64,7 @@ public class CommentController {
                 DUser dUser = new DUser(); // Her yorum için yeni bir DUser nesnesi oluşturuldu.
                 dUser.setUsername(comment.getUser().getUsername());
                 dUser.setId((long) comment.getUser().getId());
+                dUser.setImage(comment.getUser().getImage());
 
                 dComment.setUser(dUser);
                 newList.add(dComment);

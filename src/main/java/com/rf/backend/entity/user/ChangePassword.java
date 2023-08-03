@@ -16,4 +16,5 @@ public class ChangePassword {
     @Size(min = 4)
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" ,message = "Lütfen en az bir büyük harf,bir küçüj harf ve sayi kullanin")
     private String yeniSifre;
+    private String currentPassword;
 }

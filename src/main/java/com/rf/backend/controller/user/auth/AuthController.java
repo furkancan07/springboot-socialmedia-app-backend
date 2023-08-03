@@ -83,6 +83,7 @@ log.info(authorization);
      if(userService.kullaniciVarMi(changePassword.getUsername())){
          user1=userService.bulKullanici(changePassword.getUsername());
          user1.setSifre(changePassword.getYeniSifre());
+         user1.setSifre(this.passwordEncoder.encode(user1.getSifre()));
          userService.kaydet(user1);
          return ResponseEntity.ok("Şifre Değiştirildi");
      }

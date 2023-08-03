@@ -8,16 +8,15 @@ import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -28,28 +27,64 @@ public class UserController {
     UserService userService;
     @CrossOrigin
 
+
     @PostMapping("/users") // kaydetme işlemlerinde kullanılır
 
     public StatusOkMessagge createUser(@Valid @RequestBody User user){
         userService.getAllUsers().add(user);
+        user.setSifre(userService.passwordEncoder.encode(user.getSifre()));
             userService.kaydet(user);
 
            return new StatusOkMessagge("isim: "+ user.getUsername()+" id: " + user.getId());
     }
+
     @GetMapping("/getAllUsers")
     @CrossOrigin
     public List<DUser> getUsers(){
         List<DUser> dUsers=new ArrayList<>();
         for(User user : userService.getAllUsers()){
             DUser dUser=new DUser();
+            dUser.setImage(user.getImage());
             dUser.setId((long)user.getId());
             dUser.setUsername(user.getUsername());
             dUsers.add(dUser);
+            if(!userService.isFind(dUsers)){
+                dUsers.remove(dUser);
+            }
         }
+
         return dUsers;
     }
-    public String getUsername(@RequestBody User user){
-        return  user.getUsername();
+    @GetMapping("/getUser/{username}")
+    @CrossOrigin
+    public DUser getUser(@PathVariable String username){
+        User user=null;
+        DUser dUser=new DUser();
+        if(userService.kullaniciVarMi(username)){
+
+            user=userService.findByUserName(username);
+            dUser.setImage(user.getImage());
+            dUser.setId((long)user.getId());
+            dUser.setUsername(user.getUsername());
+
+
+        }
+        return dUser;
+    }
+    @PostMapping("/setImage/{username}")
+    @CrossOrigin
+    public ResponseEntity<?> setImage(@PathVariable String username, @RequestBody DUser dUser) {
+        if (userService.kullaniciVarMi(username)) {
+            User user = userService.findByUserName(username);
+            user.setImage(dUser.getImage());
+            userService.kaydet(user);
+            userService.getAllUsers().set(user.getId()-1,user );
+
+
+            return ResponseEntity.ok("değiştirildi " + dUser.getImage());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Kullanıcı bulunamadı");
+        }
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -62,11 +97,7 @@ public class UserController {
         }
         return  apiError;
     }
-
 }
-
-
-
  /* String username=user.getUsername();
         String display=user.getDisplay();
         String sifre=user.getSifre();

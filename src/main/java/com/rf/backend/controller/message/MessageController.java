@@ -62,10 +62,12 @@ User alici;
                DUser gonderen=new DUser();
                gonderen.setId((long)message.getSender().getId());
                gonderen.setUsername(message.getSender().getUsername());
+               gonderen.setImage(message.getSender().getImage());
 
                DUser alici=new DUser();
                alici.setId((long)message.getReceiver().getId());
                alici.setUsername(message.getReceiver().getUsername());
+               alici.setImage(message.getReceiver().getImage());
 
                dMessage.setSender(gonderen);
                dMessage.setReceiver(alici);
